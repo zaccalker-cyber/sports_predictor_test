@@ -1,8 +1,11 @@
 import sqlite3
+from pathlib import Path
 
-DB_NAME = "sports_events.db"
+BASE_DIR = Path(__file__).resolve().parent
 
-conn = sqlite3.connect(DB_NAME)
+DB_PATH = BASE_DIR / "data" / "sports_events_test.db"
+
+conn = sqlite3.connect(DB_PATH)
 cursor = conn.cursor()
 
 def create_database():
