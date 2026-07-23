@@ -1,5 +1,7 @@
 import sqlite3
 from pathlib import Path
+import pandas as pd
+
 
 BASE_DIR = Path(__file__).resolve().parent
 
@@ -62,3 +64,9 @@ def save():
 
 def close():
     conn.close()
+
+def fetch_data_from_database():
+    conn = sqlite3.connect(DB_PATH)
+    df = pd.read_sql_query("SELECT * FROM events ORDER BY event_date, event_time", conn)
+    conn.close()
+    return df

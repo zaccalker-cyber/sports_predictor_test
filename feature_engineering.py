@@ -40,7 +40,7 @@ def get_team_stats(team):
 
 feature_rows = []
 
-def extract_features():
+def extract_features(df):
     for _, match in df.iterrows():
 
         home = match["home_team"]
@@ -89,23 +89,28 @@ def extract_features():
             "won": 1 if match["winner"] == 0 else 0
         })
 
-features = pd.DataFrame(feature_rows)
+    features = pd.DataFrame(feature_rows)
+
+    # Remove rows where winner is NaN (incomplete games)
+    features = features.dropna(subset=['winner'])
 #features.to_csv("features.csv", index=False)
-
-# Prepare the features (X) and target variable (y)
-X = features[
-    [
-        "home_last5_wins",
-        "away_last5_wins",
-        "home_avg_points",
-        "away_avg_points",
-        "home_avg_against",
-        "away_avg_against",
-        "round"
+    # Prepare the features (X) and target variable (y)
+    X = features[
+        [
+            "home_last5_wins",
+            "away_last5_wins",
+            "home_avg_points",
+            "away_avg_points",
+            "home_avg_against",
+            "away_avg_against",
+            "round"
+        ]
     ]
-]
 
-y = features["winner"]
+    y = features["winner"]
+
+
+    return X, y
 
 # Split the dataset into training and testing sets
 # split=int(len(features) * 0.8)
