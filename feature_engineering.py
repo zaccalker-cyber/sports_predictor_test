@@ -22,7 +22,6 @@ team_history = {}
 def get_team_stats(team):
 
     games = team_history.get(team, [])
-
     if len(games) == 0:
         return {
             "wins": 0,
@@ -30,7 +29,15 @@ def get_team_stats(team):
             "avg_against": 0
         }
 
-    last5 = games[-5:]
+    completed_games = [g for g in games if not pd.isna(g.get("won"))]
+    if len(completed_games) == 0:
+        return {
+            "wins": 0,
+            "avg_for": 0,
+            "avg_against": 0
+        }
+
+    last5 = completed_games[-5:]
 
     return {
         "wins": sum(g["won"] for g in last5),
@@ -69,53 +76,51 @@ def extract_features(df):
 
         })
 
-        # AFTER creating the feature row, update history
+        # AFTER creating the feature row, update history only for completed games
+        if pd.notna(match["winner"]):
+            if home not in team_history:
+                team_history[home] = []
 
-        if home not in team_history:
-            team_history[home] = []
+            if away not in team_history:
+                team_history[away] = []
 
-        if away not in team_history:
-            team_history[away] = []
+            team_history[home].append({
+                "points_for": match["home_score"],
+                "points_against": match["away_score"],
+                "won": 1 if match["winner"] == 1 else 0
+            })
 
-        team_history[home].append({
-            "points_for": match["home_score"],
-            "points_against": match["away_score"],
-            "won": 1 if match["winner"] == 1 else 0
-        })
-
-        team_history[away].append({
-            "points_for": match["away_score"],
-            "points_against": match["home_score"],
-            "won": 1 if match["winner"] == 0 else 0
-        })
+            team_history[away].append({
+                "points_for": match["away_score"],
+                "points_against": match["home_score"],
+                "won": 1 if match["winner"] == 0 else 0
+            })
 
     features = pd.DataFrame(feature_rows)
+    features.to_csv("data\\features.csv", index=False)
 
     # Remove rows where winner is NaN (incomplete games)
-    features = features.dropna(subset=['winner'])
-#features.to_csv("features.csv", index=False)
+    features_train = features.dropna(subset=['winner'])
+
     # Prepare the features (X) and target variable (y)
-    X = features[
+    X = features_train[
         [
+            "round",
             "home_last5_wins",
             "away_last5_wins",
             "home_avg_points",
             "away_avg_points",
             "home_avg_against",
-            "away_avg_against",
-            "round"
+            "away_avg_against"
         ]
     ]
 
-    y = features["winner"]
+    y = features_train["winner"]
 
 
     return X, y
 
-# Split the dataset into training and testing sets
-# split=int(len(features) * 0.8)
-# X_train, X_test, y_train, y_test = X.iloc[:split], X.iloc[split:], y.iloc[:split], y.iloc[split:]
-
+# Train model function
 def train_model(X, y):
     # Train a Random Forest Classifier model
     from sklearn.ensemble import RandomForestClassifier
@@ -130,34 +135,5 @@ def train_model(X, y):
 
     # Save model
     import joblib
-    joblib.dump(model, "models\\nrl_model.pkl")
+    joblib.dump(model, "model\\nrl_model.pkl")
 
-# Evaluate the model's accuracy on the test set
-#from sklearn.metrics import accuracy_score
-# predictions = model.predict(X_test)
-
-# accuracy = accuracy_score(y_test, predictions)
-
-# print(f"Accuracy: {accuracy:.2%}")
-
-# results = X_test.copy()
-
-# results["Actual"] = y_test.values
-# results["Prediction"] = predictions
-
-# print(results.head(20))
-
-# # View feature importance
-# importance = (
-#     pd.DataFrame({
-#         "Feature": X.columns,
-#         "Importance": model.feature_importances_
-#     })
-#     .sort_values("Importance", ascending=False)
-# )
-
-# print(importance)
-
-
-
-#print(features.head())

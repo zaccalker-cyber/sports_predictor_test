@@ -10,7 +10,7 @@ from database import create_database, insert_event, save, close
 league_id = "4416"
 season = "2026"
 
-start_date = date(date.today().year, 7, 1)
+start_date = date(date.today().year, 3, 1)
 end_date = date.today()
 
 current_date = start_date

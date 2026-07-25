@@ -5,31 +5,19 @@ import sys
 
 try:
     # 1. Create database
-    # create_database()
+    #create_database()
 
     # 2. Pull data from API and insert into database
-    # pull_data_from_api()
+    #pull_data_from_api()
 
-    # fetch data from database and perform feature extraction
+    # 3. fetch data from database
     df = fetch_data_from_database()
     print(df.head())
 
-    # 3. Run feature extraction and model training
+    # 4. Run feature extraction and model training
     X, y = extract_features(df)
 
-    # X = features[
-    #     [
-    #         "home_last5_wins",
-    #         "away_last5_wins",
-    #         "home_avg_points",
-    #         "away_avg_points",
-    #         "home_avg_against",
-    #         "away_avg_against",
-    #         "round"
-    #     ]
-    # ]
-    # y = features["winner"]
-
+    # 5. Train the model
     train_model(X, y)
     print("✓ Pipeline completed successfully")
     
