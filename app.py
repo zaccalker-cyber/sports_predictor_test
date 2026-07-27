@@ -5,10 +5,10 @@ import sys
 
 try:
     # 1. Create database
-    #create_database()
+    create_database()
 
     # 2. Pull data from API and insert into database
-    #pull_data_from_api()
+    pull_data_from_api()
 
     # 3. fetch data from database
     df = fetch_data_from_database()
@@ -20,7 +20,7 @@ try:
     # 5. Train the model
     train_model(X, y)
     print("✓ Pipeline completed successfully")
-    
+
 except Exception as e:
     print(f"✗ Pipeline failed: {e}", file=sys.stderr)
     sys.exit(1)

@@ -4,14 +4,36 @@ import pandas as pd
 import json
 from datetime import date, datetime, timedelta
 from database import create_database, insert_event, save, close
+import sqlite3
 
-#create_database()
+# Get last date from database
+def get_last_date_from_database():
+    conn = sqlite3.connect("data/sports_events_test.db")
+    cursor = conn.cursor()
+    query = "SELECT event_date FROM events WHERE winner IS NULL ORDER BY event_date ASC LIMIT 1"
+    cursor.execute(query)
+    last_date = cursor.fetchone()[0]
+    if last_date:
+        print(f"Last date is {last_date}")
+        return last_date
+    else:
+        print("No events found in the database.")
+        return False
+    conn.close()
+    
 
 league_id = "4416"
 season = "2026"
+last_date = get_last_date_from_database()
 
-start_date = date(date.today().year, 3, 1)
-end_date = date.today()
+# Create the start date of the API call 
+if last_date:
+    start_date = datetime.strptime(last_date, "%Y-%m-%d").date()
+else:
+    start_date = date(date.today().year, 3, 1)
+
+# Add 7 days to the end date
+end_date = date.today() + timedelta(days=7)
 
 current_date = start_date
 last_request = 0
