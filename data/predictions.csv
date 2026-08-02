@@ -1,0 +1,14 @@
+round,home_team,away_team,home_last5_wins,away_last5_wins,home_avg_points,away_avg_points,home_avg_against,away_avg_against,predicted_winner,home_probability,away_probability
+22,Gold Coast Titans,New Zealand Warriors,3,3,25.0,24.0,24.0,16.4,1.0,0.43493863216547624,0.565061367834524
+22,Penrith Panthers,Canberra Raiders,2,4,20.4,34.8,18.2,20.8,0.0,0.5387037599139766,0.4612962400860234
+22,Brisbane Broncos,Newcastle Knights,1,2,12.8,17.8,26.0,17.4,0.0,0.5037848735103948,0.49621512648960514
+22,Cronulla Sharks,South Sydney Rabbitohs,4,3,34.0,24.8,14.6,26.4,1.0,0.3188706858443701,0.6811293141556299
+22,Wests Tigers,Parramatta Eels,0,2,6.4,16.0,31.2,22.0,0.0,0.6058450272923958,0.39415497270760425
+23,Gold Coast Titans,North Queensland Cowboys,3,3,25.0,18.2,24.0,31.6,1.0,0.39008596524231703,0.6099140347576831
+23,New Zealand Warriors,Penrith Panthers,3,2,24.0,20.4,16.4,18.2,1.0,0.39511121224006884,0.6048887877599314
+23,Sydney Roosters,Canterbury Bankstown Bulldogs,5,4,34.2,25.6,14.0,16.0,1.0,0.35675713273081705,0.6432428672691831
+23,Melbourne Storm,Manly Sea Eagles,1,1,16.0,21.2,25.2,26.4,0.0,0.5014826656062135,0.4985173343937866
+23,Dolphins,Brisbane Broncos,3,1,20.4,12.8,28.2,26.0,1.0,0.4401674674010202,0.55983253259898
+23,South Sydney Rabbitohs,Parramatta Eels,3,2,24.8,16.0,26.4,22.0,1.0,0.29274457807198245,0.7072554219280178
+23,Canberra Raiders,Newcastle Knights,4,2,34.8,17.8,20.8,17.4,1.0,0.39764497798882964,0.6023550220111702
+23,St. George Illawara Dragons,Cronulla Sharks,1,4,18.4,34.0,24.0,14.6,0.0,0.5950418712636977,0.40495812873630216
