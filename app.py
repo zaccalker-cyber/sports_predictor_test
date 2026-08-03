@@ -1,6 +1,7 @@
 from database import create_database, fetch_data_from_database
 from scraper import pull_data_from_api
 from feature_engineering import extract_features, train_model
+from predict import predict_future_games
 import sys
 
 try:
@@ -20,6 +21,9 @@ try:
     # 5. Train the model
     train_model(X, y)
     print("✓ Pipeline completed successfully")
+
+    # 6. Predict future games
+    predict_future_games()
 
 except Exception as e:
     print(f"✗ Pipeline failed: {e}", file=sys.stderr)
