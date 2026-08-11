@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <title>NRL Predictions</title>
+
+    <link rel="stylesheet" href="../static/style.css">
+
+</head>
+
+<body>
+
+<h1>Sports Predictor</h1>
+
+<table>
+
+<tr>
+
+<th>Date</th>
+<th>Home</th>
+<th>Away</th>
+<th>Prediction</th>
+<th>Confidence</th>
+
+</tr>
+
+{% for game in predictions %}
+
+<tr>
+
+<td>{{ game.date }}</td>
+<td>{{ game.home_team }}</td>
+<td>{{ game.away_team }}</td>
+<td>{{ game.prediction }}</td>
+<td>{{ game.confidence }}</td>
+
+</tr>
+
+{% endfor %}
+
+</table>
+
+</body>
+
+</html>
