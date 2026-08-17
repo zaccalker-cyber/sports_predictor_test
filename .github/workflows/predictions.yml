@@ -1,0 +1,52 @@
+name: Generate Predictions
+
+on:
+  workflow_dispatch:
+
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  predict:
+    runs-on: ubuntu-latest
+
+    steps:
+
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Generate predictions
+        run: |
+          python app.py
+
+      - name: Check predictions file
+        run: |
+          ls -lh data/predictions.csv
+
+      - name: Login to Azure
+        uses: azure/login@v2
+        with:
+          client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+
+      - name: Upload predictions to Azure
+        run: |
+          az storage blob upload \
+            --account-name ${{ secrets.AZURE_STORAGE_ACCOUNT }} \
+            --container-name predictions \
+            --name predictions.csv \
+            --file data/predictions.csv \
+            --auth-mode login \
+            --overwrite true

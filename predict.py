@@ -22,4 +22,13 @@ def predict_future_games():
         predicted_winner_series.loc[i, "away_probability"] = probability[j][1]
         j += 1
     predicted_winner_series.drop(columns=["winner", "index"], inplace=True)
+    for predicted_winner in predicted_winner_series["predicted_winner"]:
+        if predicted_winner == 1:
+            print("Predicted winner: Home team")
+            predicted_winner_series["predicted_winner_team"] = predicted_winner_series["home_team"]
+        elif predicted_winner == 0:
+            print("Predicted winner: Away team")
+            predicted_winner_series["predicted_winner_team"] = predicted_winner_series["away_team"]
+        else:
+            print("Predicted winner: Draw")
     predicted_winner_series.to_csv("data\\predictions.csv", index=False)
