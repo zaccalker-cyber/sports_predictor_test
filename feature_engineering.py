@@ -97,7 +97,7 @@ def extract_features(df):
             })
 
     features = pd.DataFrame(feature_rows)
-    features.to_csv("data\\features.csv", index=False)
+    features.to_csv("data/features.csv", index=False)
 
     # Remove rows where winner is NaN (incomplete games)
     features_train = features.dropna(subset=['winner'])
@@ -135,5 +135,5 @@ def train_model(X, y):
 
     # Save model
     import joblib
-    joblib.dump(model, "model\\nrl_model.pkl")
+    joblib.dump(model, "model/nrl_model.pkl")
 

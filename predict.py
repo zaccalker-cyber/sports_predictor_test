@@ -2,13 +2,13 @@ import pandas as pd
 import joblib
 
 # Read features from csv and prepare for prediction
-future_games_features = pd.read_csv("data\\features.csv")
+future_games_features = pd.read_csv("data/features.csv")
 future_games_features = future_games_features[future_games_features["winner"].isna()]
 future_games_features_x = future_games_features.drop(columns=["winner", "home_team", "away_team"])
 
 def predict_future_games():
     # Load model and make predictions
-    model = joblib.load("model\\nrl_model.pkl")
+    model = joblib.load("model/nrl_model.pkl")
     prediction = model.predict(future_games_features_x)
     probability = model.predict_proba(future_games_features_x)
     print(f"Probability: {probability}")
@@ -31,4 +31,4 @@ def predict_future_games():
             predicted_winner_series["predicted_winner_team"] = predicted_winner_series["away_team"]
         else:
             print("Predicted winner: Draw")
-    predicted_winner_series.to_csv("data\\predictions.csv", index=False)
+    predicted_winner_series.to_csv("data/predictions.csv", index=False)
